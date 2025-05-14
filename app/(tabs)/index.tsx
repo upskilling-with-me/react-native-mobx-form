@@ -1,10 +1,28 @@
+import { DynamicForm } from "@/components/forms/DynamicForms";
 import { StyleSheet, View } from "react-native";
-import { Text } from "react-native-paper";
+
+const schema = [
+	{
+		id: '1',
+		name: "name",
+		type: "text",
+		value: "enter your name",
+		placeholder: "enter your name",
+		displayFieldName: "Name",
+	},
+	{
+		id: '2',
+		name: "country",
+		type: "dropdown",
+		value: "select your country",
+		displayFieldName: "Country",
+	},
+];
 
 export default function HomeScreen() {
 	return (
-		<View style={styles.container}>
-			<Text>React native Mobx Form</Text>
+		<View >
+			<DynamicForm schema={schema} />
 		</View>
 	);
 }

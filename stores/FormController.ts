@@ -1,48 +1,28 @@
-import { makeAutoObservable } from "mobx";
+import { FormElement } from "@/models/FormElement";
+import { makeObservable, observable } from "mobx";
 
-export type FieldType =
-	| "text"
-	| "dropdown"
-	| "multiselect"
-	| "checkbox"
-	| "radio";
-
-interface FormFieldSchema {
-	name: string;
-	type: FieldType;
-	loadOnDemand?: () => Promise<any[]>;
-	displayFieldName?: string;
-	multiple?: boolean;
-	onUpdateValue?: (value: any, controller: FormController) => void;
-}
-
-interface FormSchema {
-	fields: FormFieldSchema[];
-	events?: {
-		submitForm?: (
-			values: Record<string, any>,
-			controller: FormController,
-		) => void;
-	};
-}
 
 export class FormController {
-	schema: FormSchema;
-	values: Record<string, any> = {};
-	options: Record<string, any[]> = {};
-	loading: Record<string, boolean> = {};
+	formElements: FormElement[] = [];
 
-	constructor(schema: FormSchema) {
-		this.schema = schema;
-		makeAutoObservable(this);
-		this.initialize();
+	constructor(formElements: FormElement[]) {
+		this.formElements = formElements;
+
+		makeObservable(this, {
+			formElements: observable,
+		});
 	}
 
-	private initialize() {
-		for (const field of this.schema.fields) {
-			this.values[field.name] = null;
-			this.options[field.name] = [];
-			this.loading[field.name] = false;
+	updateFormElementValue(id: string, value: any) {
+		const formElement = this.formElements.find(formElement => formElement.id === id);
+
+		if (formElement) {
+			formElement.value = value;
 		}
+	}
+
+	getFormElementValue(id: string) {
+		const formElement = this.formElements.find(formElement => formElement.id === id);
+		return formElement ? formElement.value : null;
 	}
 }
