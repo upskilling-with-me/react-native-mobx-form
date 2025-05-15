@@ -3,8 +3,12 @@ import { observer } from 'mobx-react-lite';
 import { StyleSheet, View } from "react-native";
 import { TextInput } from 'react-native-paper';
 
+let controller: FormController | null = null;
+
 export const DynamicForm = observer(({ schema }: any) => {
-    const controller = new FormController(schema);
+    if (!controller) {
+        controller = new FormController(schema);
+    }
 
     return (
         <View style={styles.container}>
@@ -16,9 +20,8 @@ export const DynamicForm = observer(({ schema }: any) => {
                                 key={formElement.id}
                                 mode="outlined"
                                 style={styles.input}
-                                {...formElement}
                                 value={formElement.value}
-                                onChange={formElement.listner}
+                                onChangeText={(text) => controller?.updateFormElementValue(formElement.id, text)}
                             />
                         );
                     default:

@@ -1,5 +1,5 @@
 import { FormElement } from "@/models/FormElement";
-import { makeObservable, observable } from "mobx";
+import { action, makeObservable, observable } from "mobx";
 
 
 export class FormController {
@@ -10,6 +10,7 @@ export class FormController {
 
 		makeObservable(this, {
 			formElements: observable,
+			updateFormElementValue: action,
 		});
 	}
 
