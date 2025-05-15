@@ -3,7 +3,6 @@ import { makeObservable, observable } from "mobx";
 export type FormElementType =
     | "text"
     | "dropdown"
-    | "multiselect"
     | "checkbox"
     | "radio";
 

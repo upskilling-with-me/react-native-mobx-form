@@ -2,6 +2,7 @@ import { FormController } from '@/stores/FormController';
 import { observer } from 'mobx-react-lite';
 import { StyleSheet, View } from "react-native";
 import { TextInput } from 'react-native-paper';
+import { TapDropdown } from './TapDropDown';
 
 let controller: FormController | null = null;
 
@@ -24,6 +25,15 @@ export const DynamicForm = observer(({ schema }: any) => {
                                 onChangeText={(text) => controller?.updateFormElementValue(formElement.id, text)}
                             />
                         );
+
+                    case "dropdown":
+                        return (<TapDropdown
+                            key={formElement.id}
+                            label={formElement.displayFieldName}
+                            value={formElement.value}
+                            options={formElement.options}
+                            onSelect={(value) => controller?.updateFormElementValue(formElement.id, value)}
+                        />);
                     default:
                         return null;
                 }

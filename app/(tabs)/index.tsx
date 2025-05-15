@@ -1,5 +1,6 @@
 import { DynamicForm } from "@/components/forms/DynamicForms";
 import { StyleSheet, View } from "react-native";
+import { PaperProvider } from "react-native-paper";
 
 const schema = [
 	{
@@ -14,15 +15,23 @@ const schema = [
 		id: '2',
 		name: "country",
 		type: "dropdown",
-		value: "select your country",
+		value: "India",
 		displayFieldName: "Country",
+		options: [
+			{ label: "India", value: "India" },
+			{ label: "USA", value: "USA" },
+			{ label: "UK", value: "UK" },
+			{ label: "Canada", value: "Canada" },
+			{ label: "Australia", value: "Australia" },],
 	},
 ];
 
 export default function HomeScreen() {
 	return (
 		<View >
-			<DynamicForm schema={schema} />
+			<PaperProvider>
+				<DynamicForm schema={schema} />
+			</PaperProvider>
 		</View>
 	);
 }
