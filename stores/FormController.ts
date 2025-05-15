@@ -3,12 +3,17 @@ import { action, makeObservable, observable } from "mobx";
 
 
 export class FormController {
+	formConfig: any;
 	formElements: FormElement[] = [];
 
-	constructor(formElements: FormElement[]) {
-		this.formElements = formElements;
+
+
+	constructor(schema: any) {
+		this.formConfig = schema.formConfig;
+		this.formElements = schema.formElements;
 
 		makeObservable(this, {
+			formConfig: observable,
 			formElements: observable,
 			updateFormElementValue: action,
 		});
