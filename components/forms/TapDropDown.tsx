@@ -1,6 +1,5 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Dropdown } from 'react-native-paper-dropdown';
-import styled from 'styled-components/native';
 
 interface TapDropdownProps {
   label: string;
@@ -12,12 +11,12 @@ interface TapDropdownProps {
 
 export const TapDropdown = ({ label, value, options, onSelect, error }: TapDropdownProps) => {
   return (
-    <DropdownWrapper>
-      <LabelWrapper>
-        <CustomLabel>{label}</CustomLabel>
-      </LabelWrapper>
+    <View style={styles.dropdownWrapper}>
+      <View style={styles.labelWrapper}>
+        <Text style={styles.customLabel}>{label}</Text>
+      </View>
       <Dropdown
-        mode='outlined'
+        mode="outlined"
         value={value}
         onSelect={(selectedValue?: string) => {
           if (selectedValue) {
@@ -28,76 +27,70 @@ export const TapDropdown = ({ label, value, options, onSelect, error }: TapDropd
         hideMenuHeader
         menuContentStyle={styles.menuContent}
         CustomDropdownInput={({ label }) => (
-          <DefaultDropdownInputWrapper>
-            <TruncatedText numberOfLines={1} ellipsizeMode='tail'>
+          <View style={styles.defaultDropdownInputWrapper}>
+            <Text style={styles.truncatedText} numberOfLines={1} ellipsizeMode="tail">
               {options.find((option) => option.value === value)?.label || label}
-            </TruncatedText>
-          </DefaultDropdownInputWrapper>
+            </Text>
+          </View>
         )}
         CustomDropdownItem={({ option, toggleMenu, onSelect }) => (
-          <TouchableItem
+          <TouchableOpacity
+            style={styles.touchableItem}
             onPress={() => {
               onSelect?.(option.value);
               toggleMenu();
             }}
           >
-            <TruncatedText numberOfLines={1} ellipsizeMode='tail'>
+            <Text style={styles.truncatedText} numberOfLines={1} ellipsizeMode="tail">
               {option.label}
-            </TruncatedText>
-          </TouchableItem>
+            </Text>
+          </TouchableOpacity>
         )}
       />
-      {error && <ErrorText>{error}</ErrorText>}
-    </DropdownWrapper>
+      {error && <Text style={styles.errorText}>{error}</Text>}
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
+  dropdownWrapper: {
+    marginBottom: 10,
+  },
+  labelWrapper: {
+    position: 'absolute',
+    top: -10,
+    left: 10,
+    backgroundColor: 'white',
+    paddingHorizontal: 5,
+    zIndex: 1,
+  },
+  customLabel: {
+    fontSize: 12,
+    color: '#666',
+  },
+  defaultDropdownInputWrapper: {
+    position: 'relative',
+    marginBottom: 20,
+    borderWidth: 1,
+    borderColor: '#ccc',
+    paddingHorizontal: 10,
+    paddingVertical: 16,
+    backgroundColor: '#fff',
+  },
+  truncatedText: {
+    fontSize: 16,
+    color: 'black',
+  },
+  touchableItem: {
+    padding: 10,
+  },
+  errorText: {
+    color: 'red',
+    fontSize: 12,
+    marginTop: 5,
+  },
   menuContent: {
     marginTop: 32,
     backgroundColor: '#fff',
   },
 });
-
-const DropdownWrapper = styled.View`
-  margin-bottom: 10px;
-`;
-
-const LabelWrapper = styled.View`
-  position: absolute;
-  top: -10px;
-  left: 10px;
-  background-color: white;
-  padding: 0 5px;
-  z-index: 1;
-`;
-
-const CustomLabel = styled(Text)`
-  font-size: 12px;
-  color: #666;
-`;
-
-const DefaultDropdownInputWrapper = styled.View`
-  position: relative;
-  margin-bottom: 20px;
-  border-width: 1px;
-  border-color: #ccc;
-  paddingHorizontal: 10px;
-  paddingVertical: 16px;
-  background-color: #fff;
-`;
-
-const TruncatedText = styled(Text)`
-  font-size: 16px;
-  color: black;
-`;
-
-const TouchableItem = styled.TouchableOpacity`
-  padding: 10px;
-`;
-
-const ErrorText = styled(Text)`
-  color: red;
-  font-size: 12px;
-  margin-top: 5px;
-`;

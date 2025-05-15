@@ -1,29 +1,37 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { useFonts } from 'expo-font';
-import { Stack } from 'expo-router';
-import { StatusBar } from 'expo-status-bar';
 import 'react-native-reanimated';
 
-import { useColorScheme } from '@/hooks/useColorScheme';
+import { DynamicForm } from '@/components/forms/DynamicForms';
+import { PaperProvider } from 'react-native-paper';
 
 export default function RootLayout() {
-  const colorScheme = useColorScheme();
-  const [loaded] = useFonts({
-    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
-  });
+	const schema = [
+		{
+			id: '1',
+			name: "name",
+			type: "text",
+			value: "enter your name",
+			placeholder: "enter your name",
+			displayFieldName: "Name",
+		},
+		{
+			id: '2',
+			name: "country",
+			type: "dropdown",
+			value: "India",
+			displayFieldName: "Country",
+			options: [
+				{ label: "India", value: "India" },
+				{ label: "USA", value: "USA" },
+				{ label: "UK", value: "UK" },
+				{ label: "Canada", value: "Canada" },
+				{ label: "Australia", value: "Australia" },],
+		},
+	];
 
-  if (!loaded) {
-    // Async font loading only occurs in development.
-    return null;
-  }
 
-  return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="+not-found" />
-      </Stack>
-      <StatusBar style="auto" />
-    </ThemeProvider>
-  );
+	return (
+		<PaperProvider>
+			<DynamicForm schema={schema} />
+		</PaperProvider>
+	);
 }

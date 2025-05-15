@@ -1,6 +1,6 @@
 import { DynamicForm } from "@/components/forms/DynamicForms";
-import { StyleSheet, View } from "react-native";
-import { PaperProvider } from "react-native-paper";
+import { View } from 'react-native';
+
 
 const schema = [
 	{
@@ -28,20 +28,9 @@ const schema = [
 
 export default function HomeScreen() {
 	return (
-		<View >
-			<PaperProvider>
-				<DynamicForm schema={schema} />
-			</PaperProvider>
+		<View>
+			<DynamicForm schema={schema} />
 		</View>
 	);
 }
 
-const styles = StyleSheet.create({
-	container: {
-		display: "flex",
-		flex: 1,
-		justifyContent: "center",
-		alignItems: "center",
-		backgroundColor: "#fff",
-	},
-});
