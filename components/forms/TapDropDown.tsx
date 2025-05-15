@@ -25,6 +25,7 @@ export const TapDropdown = ({ label, value, options, onSelect, error }: TapDropd
         }}
         options={options}
         hideMenuHeader
+        
         menuContentStyle={styles.menuContent}
         CustomDropdownInput={({ label }) => (
           <View style={styles.defaultDropdownInputWrapper}>
@@ -55,6 +56,7 @@ export const TapDropdown = ({ label, value, options, onSelect, error }: TapDropd
 const styles = StyleSheet.create({
   dropdownWrapper: {
     marginBottom: 10,
+    width: '100%',
   },
   labelWrapper: {
     position: 'absolute',
@@ -90,7 +92,7 @@ const styles = StyleSheet.create({
     marginTop: 5,
   },
   menuContent: {
-    marginTop: 32,
+    marginTop: 50,
     backgroundColor: '#fff',
   },
 });
