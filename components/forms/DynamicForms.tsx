@@ -6,9 +6,9 @@ import { TapDropdown } from './TapDropDown';
 
 let controller: FormController | null = null;
 
-export const DynamicForm = observer(({ schema }: any) => {
+export const DynamicForm = observer(({ schema, eventHandlers }: any) => {
     if (!controller) {
-        controller = new FormController(schema);
+        controller = new FormController(schema, eventHandlers);
     }
 
     return (
@@ -28,13 +28,15 @@ export const DynamicForm = observer(({ schema }: any) => {
                             );
 
                         case "dropdown":
-                            return (<TapDropdown
-                                key={formElement.id}
-                                label={formElement.displayFieldName}
-                                value={formElement.value}
-                                options={formElement.options}
-                                onSelect={(value) => controller?.updateFormElementValue(formElement.id, value)}
-                            />);
+                            return (
+                                <TapDropdown
+                                    key={formElement.id}
+                                    label={formElement.displayFieldName}
+                                    value={formElement.value}
+                                    options={formElement.options}
+                                    onSelect={(value) => controller?.updateFormElementValue(formElement.id, value)}
+                                />
+                            );
                         default:
                             return null;
                     }
@@ -44,8 +46,8 @@ export const DynamicForm = observer(({ schema }: any) => {
                 {controller.formConfig.buttons.map((button: any) => (
                     <Button
                         key={button.name}
-                        mode={button.type === "primary" ? "contained" : "outlined"}
-                        onPress={() => console.log(button.name)}
+                        mode={button.variant}
+                        onPress={() => controller?.triggerFormEvent(button)}
                         style={styles.btn}
                     >
                         {button.name}

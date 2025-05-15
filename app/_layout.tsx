@@ -6,7 +6,11 @@ import { PaperProvider } from 'react-native-paper';
 export default function RootLayout() {
 	const schema = {
 		formConfig: {
-			buttons: [{ name: "Cancel", type: "seconday" }, { name: "Submit", type: "primary" }],
+			buttons: [
+				{ name: "Reset", variant: "text", event: "handleReset", type: 'reset' },
+				{ name: "Cancel", variant: "outlined", event: "handleCancel", type: 'cancel' },
+				{ name: "Submit", variant: "contained", event: "handleSubmit", type: 'submit' }
+			]
 		},
 		formElements: [
 			{
@@ -33,10 +37,16 @@ export default function RootLayout() {
 		]
 	};
 
+	const eventHandlers = {
+		handleCancel: () => console.log("Cancel button clicked!"),
+		handleSubmit: (formData: any) => console.log("Submit button clicked!", formData),
+		handleReset: () => console.log("Reset button clicked!"),
+	};
+
 
 	return (
 		<PaperProvider>
-			<DynamicForm schema={schema} />
+			<DynamicForm schema={schema} eventHandlers={eventHandlers} />
 		</PaperProvider>
 	);
 }
