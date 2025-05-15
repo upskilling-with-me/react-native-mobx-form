@@ -6,9 +6,9 @@ import { TapDropdown } from './TapDropDown';
 
 let controller: FormController | null = null;
 
-export const DynamicForm = observer(({ schema, eventHandlers }: any) => {
+export const DynamicForm = observer(({ schema }: any) => {
     if (!controller) {
-        controller = new FormController(schema, eventHandlers);
+        controller = new FormController(schema);
     }
 
     return (

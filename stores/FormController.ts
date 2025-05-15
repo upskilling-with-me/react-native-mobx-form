@@ -5,17 +5,15 @@ import { action, makeObservable, observable } from "mobx";
 interface ButtonType {
 	name: string;
 	variant: string;
-	event: string;
+	event: (...args: any[]) => void;
 	type: string;
 }
 
 export class FormController {
 	formConfig: any;
 	formElements: FormElement[] = [];
-	eventHandlers: Record<string, Function>;
 
-	constructor(schema: any, eventHandlers: Record<string, Function>) {
-		this.eventHandlers = eventHandlers;
+	constructor(schema: any) {
 		this.formConfig = schema.formConfig;
 		this.formElements = schema.formElements;
 
@@ -40,14 +38,15 @@ export class FormController {
 	}
 
 	triggerFormEvent(button: ButtonType, ...args: any[]) {
-		if (button?.type === "submit" && typeof this.eventHandlers[button?.event] === "function") {
+		if (button?.type === "submit" && typeof button?.event === "function") {
 			const formData = this.formElements.reduce((acc, el) => {
 				acc[el.name] = el.value;
 				return acc;
 			}, {} as Record<string, any>);
-			this.eventHandlers[button?.event](formData, ...args); // handleSubmit(formData)
-		} else if (typeof this.eventHandlers[button?.event] === "function") {
-			this.eventHandlers[button?.event](...args); // handleCancel()
+
+			button?.event(formData, ...args);
+		} else if (typeof button?.event === "function") {
+			button?.event(...args);
 		}
 	}
 }
