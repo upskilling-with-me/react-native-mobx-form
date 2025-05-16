@@ -34,7 +34,7 @@ export const DynamicForm = observer(({ schema }: any) => {
                                 return (
                                     <View style={{ flexBasis: "100%" }} key={formElement.id}>
                                         <MultiSelectDropdown
-                                            label={formElement.displayFieldName}
+                                            label={formElement.name}
                                             value={formElement.value}
                                             onSelect={(value) => controller?.updateFormElementValue(formElement.id, value)}
                                             options={formElement.config?.options ?? []}
@@ -48,7 +48,7 @@ export const DynamicForm = observer(({ schema }: any) => {
                             return (
                                 <TapDropdown
                                     key={formElement.id}
-                                    label={formElement.displayFieldName}
+                                    label={formElement.name}
                                     value={formElement.value}
                                     options={formElement.config?.options ?? []}
                                     onSelect={(value) => controller?.updateFormElementValue(formElement.id, value)}

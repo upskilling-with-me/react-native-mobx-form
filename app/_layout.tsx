@@ -61,7 +61,7 @@ export default function RootLayout() {
 				name: "country-multiselect",
 				type: "dropdown",
 				value: [],
-				displayFieldName: "Country(MultiSelect)",
+				displayFieldName: "{name}({identifier})",
 				config: {
 					placeholder: "Select countries",
 					options: [
