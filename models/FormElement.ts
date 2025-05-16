@@ -12,15 +12,19 @@ export class FormElement {
     type: FormElementType;
     displayFieldName: string;
     value: any;
-    options: any[] = [];
+    config?: {
+        options?: any[];
+        isMultiSelect?: boolean;
+        placeholder?: string;
+    }
 
-    constructor(id: string, name: string, type: FormElementType, displayFieldName: string, value: any, options: any) {
+    constructor(id: string, name: string, type: FormElementType, displayFieldName: string, value: any, config?: any) {
         this.id = id;
         this.name = name;
         this.type = type;
         this.displayFieldName = displayFieldName;
         this.value = value;
-        this.options = options;
+        this.config = config || {};
 
         makeObservable(this, {
             id: observable,
@@ -28,7 +32,7 @@ export class FormElement {
             type: observable,
             displayFieldName: observable,
             value: observable,
-            options: observable,
+            config: observable,
         });
     }
 }

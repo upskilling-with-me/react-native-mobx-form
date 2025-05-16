@@ -2,6 +2,7 @@ import { FormController } from '@/stores/FormController';
 import { observer } from 'mobx-react-lite';
 import { StyleSheet, View } from "react-native";
 import { Button, TextInput } from 'react-native-paper';
+import { MultiSelectDropdown } from 'react-native-paper-dropdown';
 import { TapDropdown } from './TapDropDown';
 
 let controller: FormController | null = null;
@@ -24,19 +25,37 @@ export const DynamicForm = observer(({ schema }: any) => {
                                     style={styles.input}
                                     value={formElement.value}
                                     onChangeText={(text) => controller?.updateFormElementValue(formElement.id, text)}
+                                    placeholder={formElement.config?.placeholder}
                                 />
                             );
 
                         case "dropdown":
+                            if(formElement.config?.isMultiSelect) {
+                                return (
+                                    <View style={{ flexBasis: "100%" }} key={formElement.id}>
+                                        <MultiSelectDropdown
+                                            label={formElement.displayFieldName}
+                                            value={formElement.value}
+                                            onSelect={(value) => controller?.updateFormElementValue(formElement.id, value)}
+                                            options={formElement.config?.options ?? []}
+                                            mode='outlined'
+                                            menuContentStyle={{ width: "100%" }}
+                                            placeholder={formElement.config?.placeholder}
+                                        />
+                                    </View>
+                                )
+                            } else {
                             return (
                                 <TapDropdown
                                     key={formElement.id}
                                     label={formElement.displayFieldName}
                                     value={formElement.value}
-                                    options={formElement.options}
+                                    options={formElement.config?.options ?? []}
                                     onSelect={(value) => controller?.updateFormElementValue(formElement.id, value)}
+                                    placeholder={formElement.config?.placeholder}
                                 />
                             );
+                        }
                         default:
                             return null;
                     }

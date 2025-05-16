@@ -7,9 +7,10 @@ interface TapDropdownProps {
   options: { value: string; label: string }[];
   onSelect: (value: string) => void;
   error?: string;
+  placeholder?: string;
 }
 
-export const TapDropdown = ({ label, value, options, onSelect, error }: TapDropdownProps) => {
+export const TapDropdown = ({ label, value, options, onSelect, error, placeholder }: TapDropdownProps) => {
   return (
     <View style={styles.dropdownWrapper}>
       <View style={styles.labelWrapper}>
@@ -25,7 +26,7 @@ export const TapDropdown = ({ label, value, options, onSelect, error }: TapDropd
         }}
         options={options}
         hideMenuHeader
-        
+        placeholder={placeholder}
         menuContentStyle={styles.menuContent}
         CustomDropdownInput={({ label }) => (
           <View style={styles.defaultDropdownInputWrapper}>
