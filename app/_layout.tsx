@@ -34,10 +34,9 @@ export default function RootLayout() {
 				name: "name",
 				type: "text",
 				value: "",
-				placeholder: "enter your name",
 				displayFieldName: "Name",
 				config: {
-					placeholder: "enter your name",
+					placeholder: "Enter your name",
 				}
 			},
 			{
@@ -47,6 +46,7 @@ export default function RootLayout() {
 				value: "",
 				displayFieldName: "Country",
 				config: {
+					placeholder: "Select your country",
 					options: [
 						{ label: "India", value: "India" },
 						{ label: "USA", value: "USA" },
@@ -63,6 +63,7 @@ export default function RootLayout() {
 				value: [],
 				displayFieldName: "Country(MultiSelect)",
 				config: {
+					placeholder: "Select countries",
 					options: [
 						{ label: "India", value: "India" },
 						{ label: "USA", value: "USA" },
